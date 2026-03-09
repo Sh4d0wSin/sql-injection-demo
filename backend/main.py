@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import sqlite3
 from pydantic import BaseModel
 
@@ -8,6 +9,13 @@ class LoginRequest(BaseModel):
     password: str
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def init_db():
     conn = sqlite3.connect("demo.db")
